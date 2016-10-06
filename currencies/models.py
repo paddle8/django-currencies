@@ -26,6 +26,26 @@ class Currency(models.Model):
     is_default = models.BooleanField(_('default'), default=False,
         help_text=_('Make this the default user currency.'))
 
+    subunits = models.PositiveIntegerField(_('subunits'),
+        default=100,
+        help_text=_('the number of units needed to break this amount into '
+            'its lowest denomination. (eg USD has 100 subunits, meaning '
+            'there are 100 cents in 1 dollar)'))
+    is_prefix = models.BooleanField(_('is_prefix'),
+        default=True,
+        help_text=_('determines if the curreny symbol should come before '
+            'or after the numerical value'))
+    subunit_separator = models.CharField(_('subunit_separator'),
+        max_length=2,
+        default='.',
+        help_text=_('the separator between full values and subunits '
+            '(eg in USD the . between dollars and cents)'))
+    thousands_separator = models.CharField(_('thousands_separator'),
+        max_length=1,
+        default=',',
+        help_text=_('the separator between thousands in a number '
+            '(eg in USD the , in 1,000)'))
+
     objects = models.Manager()
     active = CurrencyManager()
 

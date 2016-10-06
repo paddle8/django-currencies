@@ -15,7 +15,7 @@ class UtilsTest(TestCase):
 
     def test_calculate_price_success(self):
         response = calculate('10', 'USD')
-        self.assertEqual(response, Decimal('15.00'))
+        self.assertEqual(response, Decimal('10.00'))
 
     # def test_calculate_price_failure(self):
     #     response = calculate('10', 'EUR')
@@ -23,7 +23,7 @@ class UtilsTest(TestCase):
 
     def test_calculate_price_doesnotexist(self):
         self.assertRaises(
-            Currency.DoesNotExist, calculate, '10', 'GBP')
+            Currency.DoesNotExist, calculate, '10', 'XXX')
 
 
 class TemplateTagTest(TestCase):
@@ -36,13 +36,13 @@ class TemplateTagTest(TestCase):
         t = template.Template(self.html +
             '{{ 10|currency:"USD" }}'
         )
-        self.assertEqual(t.render(template.Context()), '15.00')
+        self.assertEqual(t.render(template.Context()), '10.00')
 
     def test_change_currency_tag_success(self):
         t = template.Template(self.html +
             '{% change_currency 10 "USD" %}'
         )
-        self.assertEqual(t.render(template.Context()), '15.00')
+        self.assertEqual(t.render(template.Context()), '10.00')
 
     # def test_change_currency_tag_failure(self):
     #     t = template.Template(self.html +
